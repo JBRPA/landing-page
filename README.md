@@ -85,16 +85,12 @@ sabido:
   (`<header>`, `<main>`, `<section>`, `<footer>`) — ya estaban bien desde el
   principio, pero merece la pena saber que están comprobados.
 
-### Lo único que falta rellenar: el dominio
+### Dominio
 
-Varios de estos archivos necesitan tu dominio real para funcionar del
-todo (Google necesita saber la URL exacta del sitio). Busca
-`TU-DOMINIO-AQUI.com` y sustitúyelo por tu dominio en estos 2 sitios:
-
-| Placeholder | Dónde está |
-|---|---|
-| `TU-DOMINIO-AQUI.com` | `index.html` (canonical, Open Graph, Twitter Card, datos estructurados) |
-| `TU-DOMINIO-AQUI.com` | `public/robots.txt` y `public/sitemap.xml` |
+El dominio elegido es **automatizatunegocio.dev**, ya puesto en `index.html`
+(canonical, Open Graph, Twitter Card, datos estructurados) y en
+`public/robots.txt` / `public/sitemap.xml`. Si en algún momento cambias de
+dominio, busca `automatizatunegocio.dev` en esos archivos y sustitúyelo.
 
 ### Después de publicar (esto ya no es código, es un par de clics)
 
@@ -375,9 +371,13 @@ Un resumen de todo lo anterior, en orden, para no perderte:
 - [x] Analíticas (Vercel Web Analytics) — hecho, empezará a recoger datos
       en cuanto despliegues en Vercel.
 - [x] Responsive comprobado en móvil, tablet y escritorio — hecho.
-- [ ] **Comprar el dominio** y sustituir `TU-DOMINIO-AQUI.com` en los 3
-      sitios indicados en la sección SEO.
-- [ ] Desplegar en Vercel siguiendo los pasos de más abajo.
+- [x] Repositorio en GitHub (`JBRPA/landing-page`) — hecho.
+- [x] Desplegado en Vercel — hecho (proyecto `landing-page` bajo `dw97's projects`).
+- [x] Dominio elegido y ya puesto en el código (`automatizatunegocio.dev`) — hecho.
+- [ ] Comprar el dominio en Cloudflare Registrar (si no lo has hecho ya) y
+      conectarlo en Vercel (Settings → Domains).
+- [ ] Quitar el bloqueo de firewall que impide el acceso a la web, cuando
+      esté todo listo para publicar de verdad.
 - [ ] Dar de alta el dominio en Google Search Console y enviar el
       `sitemap.xml`.
 - [ ] (Recomendado, no bloqueante) Que alguien revise el texto de la
