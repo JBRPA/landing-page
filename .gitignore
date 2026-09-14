@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+
+# Documentos de trabajo internos (brief y contenido de origen), no forman
+# parte del sitio ni deben publicarse en el repositorio.
+brief_claude_code_landing.md
+landing_page_servicios.md

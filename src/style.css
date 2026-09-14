@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/*
+  Paleta de colores — "Verde bosque + ámbar cálido"
+  Pensada para transmitir confianza (verde oscuro, estable) con un punto
+  de calidez humana (ámbar), evitando el azul corporativo genérico y los
+  gradientes morados de plantilla.
+
+  Para cambiar de paleta, sustituye estos valores. Alternativa sugerida
+  en el README ("Azul petróleo + terracota").
+*/
+@theme {
+  --color-brand-950: #0f2e22;
+  --color-brand-900: #16382a;
+  --color-brand-800: #1b4332;
+  --color-brand-700: #2d6a4f;
+  --color-brand-600: #40916c;
+
+  --color-accent-600: #d4881f;
+  --color-accent-500: #e9a23b;
+  --color-accent-400: #f0b862;
+
+  --color-paper-50: #faf7f2;
+  --color-paper-100: #f3ede3;
+
+  --color-ink-900: #1f2421;
+  --color-ink-700: #3f4844;
+  --color-ink-500: #6b746f;
+
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-paper-50);
+  color: var(--color-ink-900);
+  position: relative;
+}
+
+/* Textura de grano sutil sobre toda la página, para quitarle planitud a los
+   fondos de color sólido sin necesidad de imágenes. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Texto con degradado cálido, para titulares destacados */
+.text-gradient {
+  background-image: linear-gradient(100deg, var(--color-accent-300, #f5c88a) 0%, var(--color-accent-500) 55%, var(--color-accent-600) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Manchas de "aurora" animadas para fondos oscuros */
+@keyframes aurora-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, -8%) scale(1.15); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, 6%) scale(1.1); }
+}
+@keyframes aurora-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, 10%) scale(1.05); }
+}
+
+.animate-aurora-a { animation: aurora-a 18s ease-in-out infinite; }
+.animate-aurora-b { animation: aurora-b 22s ease-in-out infinite; }
+.animate-aurora-c { animation: aurora-c 26s ease-in-out infinite; }
+
+/* Punto de luz que sigue al cursor sobre una tarjeta (directiva v-glow) */
+.glow-card {
+  position: relative;
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    var(--color-accent-500) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-card:hover::before {
+  opacity: 0.5;
+}
+
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    360px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    color-mix(in srgb, var(--color-accent-500) 12%, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glow-card:hover::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora-a,
+  .animate-aurora-b,
+  .animate-aurora-c {
+    animation: none;
+  }
+}
+
+/* Animación de entrada al hacer scroll, activada por la directiva v-reveal */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-init.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Acordeón FAQ con altura animada */
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-dash {
+  stroke-dasharray: 6 6;
+  stroke-dashoffset: 60;
+  animation: dash 3s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-dash {
+    animation: none;
+  }
+}
